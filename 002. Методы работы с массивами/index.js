@@ -6,10 +6,12 @@ const beatles = [
 ]
 
 function makeStrFromArray(){
-    let str = beatles.reduce((str,el,i) => {
+    const names = beatles.map((el, i) => `${i+1}: ${el.name}`).join(", ")
+    return `Состав участников группы Beatles: ${names}.`
+    /*let str = beatles.reduce((str,el,i) => {
         return str + ++i + ': ' + el.name + ', '
     }, 'Состав участников группы Beatles: ')
-    return str.substring(0, str.length - 2)
+    return str.substring(0, str.length - 2) */
 }
 
 function getAverageAge(){
@@ -19,15 +21,13 @@ function getAverageAge(){
 }
 
 function getYoungest(){
-    return beatles.reduce((min,el) => {
-        return min < el.age ? min : el.age
-    }, [0].age)
+    return beatles.map(({age}) => age).reduce((sum, el) => Math.min(el, sum), Number.MAX_VALUE)
 }
 
 function getOldest(){
     return beatles.reduce((max, el) => {
        return max > el.age ? max : el.age 
-    }, [0].age)
+    }, 0)
 }
 
 function getSumOfAges(){

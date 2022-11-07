@@ -1,7 +1,7 @@
 const {getNames, getOld, getYoungerThan, sortByAge, getSumOfAges, getOldest, getYoungest, getAverageAge, makeStrFromArray} = require('.')
 
 test('Создание строки из значений массива', () => {
-    expect(makeStrFromArray()).toBe('Состав участников группы Beatles: 1: John Lennon, 2: Paul McCartney, 3: George Harrison, 4: Ringo Star')
+    expect(makeStrFromArray()).toBe('Состав участников группы Beatles: 1: John Lennon, 2: Paul McCartney, 3: George Harrison, 4: Ringo Star.')
 });
 
 test('Поиск значения среднего возраста во всех значениях возраста в массивe', () => {

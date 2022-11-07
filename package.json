@@ -4,7 +4,7 @@
   "description": "Упражения по JavaScript",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest $1" 
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
     "@babel/core": "^7.20.2",
     "@babel/preset-env": "^7.20.2",
     "babel-jest": "^29.2.2",
-    "jest": "^29.2.2"
+    "jest": "^29.2.2",
+    "jest-cli": "^29.2.2"
   }
 }
