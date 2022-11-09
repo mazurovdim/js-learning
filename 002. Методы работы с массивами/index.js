@@ -9,7 +9,7 @@ function makeStrFromArray(){
     let str = beatles.reduce((str,el,i) => {
         return str + ++i + ': ' + el.name + ', '
     }, 'Состав участников группы Beatles: ')
-    return str.substring(0, str.length - 2)
+    return str.substring(0, stlength - 2)
 }
 
 function getAverageAge(){
