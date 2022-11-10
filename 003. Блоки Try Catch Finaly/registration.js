@@ -27,7 +27,6 @@ function checkFirstName(name){
         console.log('Ошибка', ex.message)
         rl.question('Ваше имя : ', checkFirstName)
     }
-
 }
 
 function checkSecondName(surname){
@@ -58,7 +57,6 @@ function checkYear(year){
     catch(ex){
         console.log('Ошибка', ex.message)
         rl.question('Год рождения: ', checkYear)
-    }
-    
+    } 
 }
 
