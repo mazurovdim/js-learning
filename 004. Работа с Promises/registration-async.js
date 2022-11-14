@@ -1,19 +1,25 @@
-const {getFirstName, getSecondName, getYear, closeReader} = require('./registration')
+const { readFile, writeFile } = require('fs').promises
+const { getFirstName, getSecondName, getYear, closeReader } = require('./registration')
 
-async function registration(){
+async function registration(person = {}){
     try{
-        let person = await getFirstName()
-        person = await getSecondName(person)
-        person = await getYear(person)
-        const {firstName, secondName, year} = person
-        console.log(`Спасибо, ${firstName}, регистрация завершена.\nИмя: ${firstName}\nФамилия: ${secondName}\nГод рождения: ${year}\n`)
+        if (!person.firstName) person.firstName = await getFirstName()
+        if (!person.secondName) person.secondName = await getSecondName()
+        if (!person.year) person.year = await getYear()
         closeReader()
+        const { firstName, secondName, year } = person
+        const output = `Спасибо, ${firstName}, регистрация завершена.\nИмя: ${firstName}\nФамилия: ${secondName}\nГод рождения: ${year}\n`
+        const header = await readFile('../header.txt')
+        await writeFile('person.txt', header + output)
+        console.log(output)
     }
     catch(error){
-        console.log(error)
-        closeReader()
+        if(error.message.includes('no such file or directory')){
+            console.log('Правильно укажите заголовочный файл')
+        } 
+        else registration(person)
+        
     }
-    
 }
 
 registration()

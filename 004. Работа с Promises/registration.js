@@ -11,7 +11,7 @@ function getFirstName() {
             if(!/^[А-Я][а-я]+$/.test(firstName)){
                 return rej('Пожалуйста вводите имя кириллицей. Первая буква должна быть заглавная.')
             }
-            return res({firstName})
+            return res(firstName)
         })
     })
 }
@@ -22,7 +22,7 @@ function getSecondName(person) {
             if(!/^[А-Я][а-я]+$/.test(secondName)){
                 return rej('Пожалуйста вводите фамилию кириллицей. Первая буква должна быть заглавная.')
             }
-            return res({...person, secondName})
+            return res(secondName)
         })
     })
 }
@@ -33,7 +33,7 @@ function getYear(person) {
             if(!/^\d{4}$/.test(year)){
                 return rej('Пожалуйста вводите год цифрами.')
             }
-            return res({...person, year})
+            return res(year)
         })
     })
 }
