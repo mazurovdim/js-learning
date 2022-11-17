@@ -14,9 +14,22 @@ async function createSlide(slideName){
     return slide
 } 
 
-Promise.all(['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth'].map(el => createSlide(el)))
+function funcDelay(ms, callback){
+    return new Promise(res => {
+        setTimeout(() => res(callback), ms)
+    })
+}
+
+async function showslide(){
+/*  Promise.all(['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth'].map(el => createSlide(el)))
     .then(bls => bls.forEach((bl, index) => {
         setTimeout(() => {document.querySelector('.content-wrapper').appendChild(bl)}, index * 2000)
-    }))
+    }))*/
+    let slidesPromisMass = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth'].map(el => createSlide(el))
+    for(const slide of slidesPromisMass){
+        await funcDelay(2000, slide).then(sl => document.querySelector('.content-wrapper').appendChild(sl))
+    }
+}
 
+showslide()
 
