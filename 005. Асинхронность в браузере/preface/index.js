@@ -15,8 +15,8 @@ async function createSlide(slideName){
 } 
 
 Promise.all(['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth'].map(el => createSlide(el)))
-    .then(bls => bls.forEach(bl => {
-        document.querySelector('.content-wrapper').appendChild(bl)
+    .then(bls => bls.forEach((bl, index) => {
+        setTimeout(() => {document.querySelector('.content-wrapper').appendChild(bl)}, index * 2000)
     }))
 
 
