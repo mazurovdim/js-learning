@@ -1,3 +1,29 @@
+.hidden{
+    display: none;
+}
+
+section{
+    max-width: 80ch;
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px dotted grey;
+    height: 300px;
+    display: flex;
+}
+
+@media (max-height: 768px) {
+    section {
+        height: 200px;
+    }
+}
+
+@media (max-height: 400px) {
+    section{
+        height: 100px;
+    }
+}
+
+/*
 * {
     box-sizing: border-box;
 }
@@ -38,3 +64,4 @@ h1{
         opacity: 1;
     }
 }
+*/
