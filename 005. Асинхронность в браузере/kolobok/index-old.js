@@ -33,3 +33,5 @@ async function showslide(){
 
 showslide()
 
+export {showslide}
+
