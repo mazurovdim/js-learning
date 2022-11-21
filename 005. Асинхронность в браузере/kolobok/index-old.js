@@ -1,6 +1,6 @@
 
 async function createSlide(slideName){ 
-    const slide = document.createElement('div') 
+    const slide = document.createElement('section') 
     const slideImage = document.createElement('img') 
     const slideText = document.createElement('p') 
     const slidePromiseText = await fetch(`data/texts/${slideName}.txt`).then(data => data.text()) 
@@ -20,18 +20,18 @@ function funcDelay(ms, callback){
     })
 }
 
-async function showslide(){
+async function showSlide(){
 /*  Promise.all(['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth'].map(el => createSlide(el)))
     .then(bls => bls.forEach((bl, index) => {
         setTimeout(() => {document.querySelector('.content-wrapper').appendChild(bl)}, index * 2000)
-    }))*/
+    }))
     let slidesPromisMass = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth'].map(el => createSlide(el))
     for(const slide of slidesPromisMass){
         await funcDelay(2000, slide).then(sl => document.querySelector('.content-wrapper').appendChild(sl))
-    }
+    }*/
 }
 
-showslide()
+showSlide()
 
-export {showslide}
+export {createSlide}
 
