@@ -3,12 +3,10 @@ import { tale, setSections } from './modules/listeners.js'
 
 customElements.define('kolobok-slide', Slide);
 ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth']
-    .map(resource => {
+    .forEach(resource => {
         const slide = document.createElement('kolobok-slide')
         slide.setAttribute('resource', resource)
         tale.appendChild(slide)
-        slide.classList.add('section')
-        slide.classList.add('hidden')
     })
 
 const slidesNodeList = document.querySelectorAll('kolobok-slide')

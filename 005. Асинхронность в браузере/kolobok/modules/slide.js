@@ -1,6 +1,6 @@
 export class Slide extends HTMLElement{
     connectedCallback(){
-        const that = this
+        const slide = this
         const textParagraph = document.createElement('p')
         const slideImage = document.createElement('img')
         const resource = this.getAttribute('resource')
@@ -11,8 +11,10 @@ export class Slide extends HTMLElement{
         fetch(`data/images/${resource}.jpg`)
             .then(slideImage.src = `data/images/${resource}.jpg`)
 
-        that.appendChild(slideImage)  
-        that.appendChild(textParagraph)
+        slide.appendChild(slideImage)  
+        slide.appendChild(textParagraph)
+        slide.classList.add('section')
+        slide.classList.add('hidden')
     }
 }
 

@@ -11,7 +11,7 @@ p {
     max-width: 550px;
 }
 
-section{
+section, kolobok-slide{
     max-width: 80ch;
     margin: 1rem;
     padding: 1rem;
