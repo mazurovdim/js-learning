@@ -4,4 +4,4 @@
 2.  `npm i tailwindcss` - установка пакета tailwind
 3.  `npx tailwindcss init` - инициализация инструментов tailwind
 4.  Создать input.css и поместить ее в директорию src, в корне проекта
-5.
+5.  `npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch` - старт сервера Tailwind. Отображает изменениие кода в реальном времени.
