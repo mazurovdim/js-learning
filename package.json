@@ -4,7 +4,8 @@
   "description": "Упражения по JavaScript",
   "main": "index.js",
   "scripts": {
-    "test": "jest $1" 
+    "testall": "jest",
+    "testdir": "jest $1"
   },
   "repository": {
     "type": "git",
