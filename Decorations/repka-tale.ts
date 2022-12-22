@@ -1,6 +1,6 @@
 import {Person, Vegetable} from './types'
 
-const grandfather: Person = {nominative: 'Дед'}
+const grandfather: Person = {nominative: 'Дед', accusative: 'Дедку'}
 const grandmother: Person = {nominative: 'Бабка', accusative: 'Бабку'}
 const granddoughter: Person = {nominative: 'Внучка', accusative: 'Внучку'}
 const dog: Person = {nominative: 'Жучка', accusative: 'Жучку'}
@@ -32,24 +32,35 @@ class RepkaTale {
         ]
     }
 
-    tale():void{
+    tale(){
+        const lastEpisode = this.#persons.length - 1
+        const personsChain = [
+            `Дедка за ${turnip.accusative}`
+        ]
         console.log([
-            ...this.preface()
+            ...this.preface(),
+            ...this.#persons.reduce((acc, person, i) => {
+                if(i === lastEpisode) return [...acc]
+                let nextPerson = this.#persons[i+1]
+                personsChain.unshift(`${nextPerson.nominative} за ${person.accusative}`)
+                return [...acc,...this.scene(person, nextPerson),...personsChain,this.upshot(i === lastEpisode - 1)]
+            },[]),
+            
         ].join('\n'))
-        console.log(this.#persons)
-        /*for(let i = 0; i < this.#persons.length - 1; i++){
-            console.log(this.scene(this.#persons[i], this.#persons[i+1]))
-        }*/
-        this.#persons.map((person, personIndex, personMas)=>{
-            let nextPerson = personMas[personIndex + 1]
-            if(nextPerson) console.log(this.scene(person, nextPerson))
-        })
     }
 
-    scene(current: Person, next?: Person):string{
-        return `Позвал(а) ${current.nominative} ${next.accusative}`
+    scene(current: Person, next?: Person):string[]{
+        const episode = [
+            `\n`,
+            `Позвал(а) ${current.nominative} ${next.accusative}`,
+        ]
+        return episode
     }
 
+    upshot(lastEpisode: boolean):string{
+        if(lastEpisode) return "тянут-потянут, — вытянули репку!"
+        return "тянут-потянут, вытянуть не могут!"
+    }
 }
 
 const repka = new RepkaTale(turnip, [grandfather, grandmother, granddoughter, dog, cat, mouse])
