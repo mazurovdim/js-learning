@@ -2,6 +2,7 @@ export interface Person {
     nominative: string
     genetive?: string
     accusative?: string 
+    next?:Person
 }
 
 export interface Parents {

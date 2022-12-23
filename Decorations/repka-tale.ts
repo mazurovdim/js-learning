@@ -6,15 +6,29 @@ const granddoughter: Person = {nominative: 'Внучка', accusative: 'Внуч
 const dog: Person = {nominative: 'Жучка', accusative: 'Жучку'}
 const cat: Person = {nominative: 'Кошка', accusative: 'Кошку'}
 const mouse: Person = {nominative: 'Мышка', accusative: 'Мышку'}
-const turnip: Vegetable = {nominative: 'Репка', accusative: 'Репку'}
+const turnip: Person = {nominative: 'Репка', accusative: 'Репку'}
 
 class RepkaTale {
-    #persons: Person[]
-    #vegetable: Vegetable
 
-    constructor(vegetable:Vegetable, persons:Person[]){
+    #persons: Person[]
+    #vegetable: Person
+    #stack: Person[] = []
+    #firstPerson: Person
+    #lastPerson: Person
+
+    constructor(vegetable:Person, persons:Person[]){
         this.#persons = persons
+        this.#firstPerson = persons[0]
+        this.#lastPerson = persons[-1]
+        vegetable.next = this.#firstPerson
         this.#vegetable = vegetable
+        this.#stack.push(vegetable)
+        this.#persons.forEach((person, i) => {
+            if(i === this.#persons.length - 1) return
+            person.next = this.#persons[i + 1]
+        })
+        
+        
     }
 
     title():string {
@@ -22,20 +36,34 @@ class RepkaTale {
     }
 
     preface():string[]{
-        const [firstPerson] = this.#persons 
-        const fpNominative = firstPerson.nominative
+        const fpNominative = this.#firstPerson.nominative
         const {nominative, accusative} = this.#vegetable
         return [
             `Посадил ${fpNominative} ${accusative}.`,
             `Выросла ${nominative} большая-пребольшая.`,
-            `Пошел ${fpNominative} ${accusative} тянуть: тянет-потянет, вытянуть не может!`
+            `Пошел ${fpNominative} ${accusative} тянуть.`,
+            ...this.queue(this.#firstPerson)
         ]
     }
 
+    queue(person: Person):string[]{
+        const participans = [...this.#stack] // Делаем купию стека
+        participans.reverse() // Переворачиваем наизнанку 
+        const result = participans.map(pers => { // Превращаем в строки
+            const { next } = pers
+            return `${next.nominative} за ${pers.accusative}`
+        })
+        this.#stack.push(person)
+        if(person.next != this.#lastPerson) return this.queue(person.next)
+        return result
+    }
+
     tale(){
-        const lastEpisode = this.#persons.length - 1
+        console.log(this.preface().join('\n'))
+        
+        /*const lastEpisode = this.#persons.length - 1
         const personsChain = [
-            `Дедка за ${turnip.accusative}`
+            `${this.#persons[0].nominative} за ${turnip.accusative}`
         ]
         console.log([
             ...this.preface(),
@@ -45,21 +73,18 @@ class RepkaTale {
                 personsChain.unshift(`${nextPerson.nominative} за ${person.accusative}`)
                 return [...acc,...this.scene(person, nextPerson),...personsChain,this.upshot(i === lastEpisode - 1)]
             },[]),
-            
-        ].join('\n'))
+        ].join('\n'))*/
     }
 
-    scene(current: Person, next?: Person):string[]{
+    scene(person: Person):string[]{
         const episode = [
-            `\n`,
-            `Позвал(а) ${current.nominative} ${next.accusative}`,
+            `Позвал(а) ${person.nominative} ${person.next.accusative}`,
         ]
         return episode
     }
 
     upshot(lastEpisode: boolean):string{
-        if(lastEpisode) return "тянут-потянут, — вытянули репку!"
-        return "тянут-потянут, вытянуть не могут!"
+    return `тянут-потянут, — ${lastEpisode? "вытянули репку!" : "вытянуть не могут!"}`
     }
 }
 
