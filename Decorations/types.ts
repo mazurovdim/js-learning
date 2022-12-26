@@ -1,16 +1,16 @@
+export enum Gender {
+    MALE,
+    FEMALE
+}
+
 export interface Person {
     nominative: string
-    genetive?: string
     accusative?: string 
+
+    funnyNominative?: string
+    funnyAccusative?: string 
+
     next?:Person
-}
-
-export interface Parents {
-    male: Person
-    female: Person
-}
-
-export interface Vegetable{
-    nominative: string
-    accusative: string
+    previous?:Person
+    gender?: Gender
 }

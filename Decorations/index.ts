@@ -1,46 +1,48 @@
-import { screaming, whatTheMethod, detailedPreface, detailedAfterword, describeAction } from './decorators'
+import data from "./data"
+import { Person, Gender } from "./types"
 
-class Warrior {
+class Story {
 
-    #commonWeapon: string
-    #secretWeapon: string
-    fightsCount: number = 0
+    #data: Person[]
+    #last: number = 1
+    #vegetable: Person
+    #gardner: Person
 
-    constructor(commonWeapon: string, secretWeapon: string){
-        this.#commonWeapon = commonWeapon
-        this.#secretWeapon = secretWeapon
+    constructor(data: Person[]){
+        this.#data = data
+        const [vegetable, gardner] = data
+        this.#vegetable = vegetable
+        this.#gardner = gardner
+        data.forEach((pers, i, arr) => {
+            if(i >= 0) {
+                pers.previous = data[i - 1]
+                if (i != arr.length - 1) pers.next = data[i + 1]
+            }
+            if (i === 1) console.log(data[i].next)
+        })
     }
 
-    @describeAction
-    @screaming
-    @whatTheMethod
-    fight(usage){
-        this.fightsCount++
-        return `${usage} ${this.#commonWeapon}`
+    refrain(){
+        this.#data
+            .slice(0, ++this.#last)
+            .reverse()
+            .forEach(pers => {
+                if (this.#last < this.#data.length) console.log(`${pers.next.nominative} за ${pers.accusative}`)
+            })
     }
 
-    @describeAction
-    @whatTheMethod
-    sneak(usage){
-        this.fightsCount++
-        return `${usage} ${this.#secretWeapon}`
-    }
-
-    //@whatTheMethod
-    foo(usage){
-        return null
-    }
-
-    @detailedPreface
-    @detailedAfterword
-    tell(preface = 'Сказка про богатыря.', afterword = 'Конец.'){
-        console.log(preface)
-        console.log(this.sneak('Вынул'))
-        console.log(this.fight('Метнул'))
-        console.log(afterword)
+    tell(){
+        this.#data.forEach((pers, i, arr) =>{
+            if(i === 0) return console.log(`Посадил ${this.#gardner.nominative} ${this.#vegetable.accusative}. Выросла ${this.#vegetable.nominative} большая-пребольшая.\nПошел ${this.#gardner.nominative} ${this.#vegetable.accusative} рвать: тянет-потянет, вытянуть не может!`)
+            const isLast = this.#data.length - 1 
+            if(i != isLast){
+                console.log(`\nПозвал-а ${pers.nominative} ${pers.next.accusative}`)
+                this.refrain() 
+                console.log(`тянут-потянут, ${i === isLast - 1? 'вытянули репку!': 'вытянуть не могут'}`)
+            }             
+        })
     }
 }
 
-const warrior = new Warrior('копьё', 'кинжал')
-
-warrior.tell()
+const story = new Story(data)
+story.tell()
