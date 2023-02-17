@@ -1,0 +1,53 @@
+a{
+    cursor:pointer;
+}
+
+ul, li, p{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.container{
+    width: 70%;
+    margin: 0 auto;
+}
+.app{
+    width: 70%;
+}
+
+section ul li {
+    border: 1px black solid;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.basket__list li{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px black dotted
+}
+
+.basket__list div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.basket__list button{
+    margin: 0;
+    padding: 0;
+    height: 15px;
+}
+
+.basket__down-button,
+.basket__up-button{
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

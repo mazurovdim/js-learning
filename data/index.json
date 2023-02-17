@@ -1,0 +1,30 @@
+{
+    "food":[
+        {
+            "id":111,
+            "title": "гамбургер",
+            "price": 22,
+            "amount": 2
+        },
+        {
+            "id":222,
+            "title": "чизбургер",
+            "price": 33,
+            "amount": 5
+        }
+    ],
+    "drinks":[
+        {
+            "id":333,
+            "title": "кола",
+            "price": 55,
+            "amount": 22
+        },
+        {
+            "id":444,
+            "title": "пепси",
+            "price": 77,
+            "amount": 58
+        }
+    ]
+}
