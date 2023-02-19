@@ -1,73 +1,58 @@
-const basketData = {}
 
-async function getProducts(url, ul){
-    const resp = await fetch(url)
-    if (!resp.ok) throw 'Не удалось загрузить данные'
-    const data = await resp.json()
+const template = document.querySelector('#templates')
+const basketElement = document.getElementById('basket')
+const showcaseDrinks = document.getElementById('drinks')
+const showcaseFood = document.getElementById('food')
 
-    data.forEach(element => {
-        const liItem = document.createElement('li')
-        const liText = document.createElement('p')
-        const liButton = document.createElement('a')
-        const { title, price, id, amount} = element
-
-        liText.textContent = `${title}, ${price} руб.`
-        liButton.textContent = 'Добавить'
-        liItem.appendChild(liText)
-        liItem.appendChild(liButton)
-        liButton.addEventListener('click', function(){
-            if(!Object.keys(basketData).includes(String(id))){
-                let counterMax = amount
-                let idItem = id
-                const liItem = document.createElement('li')
-                liItem.classList.add('basket__list-item')
-                const liText = document.createElement('p')
-                const liButton = document.createElement('a')
-                const divCountCont = document.createElement('div')
-                const countUpButton = document.createElement('button')
-                countUpButton.classList.add('basket__up-button')
-                const countDownButton = document.createElement('button')
-                countDownButton.classList.add('basket__down-button')
-                const itemCounter = document.createElement('p')
-                itemCounter.classList.add('basket__counter')
-                const itemBalance= document.createElement('p')
-                
-                liText.textContent = `${title}, ${price} руб.`
-                liItem.appendChild(liText)
-                liItem.appendChild(liButton)
-                countUpButton.textContent = '+'
-                countDownButton.textContent = '-'
-                itemCounter.textContent = 1
-                itemBalance.textContent = `На складе: ${amount}`
-                divCountCont.appendChild(itemBalance)
-                divCountCont.appendChild(countDownButton)
-                divCountCont.appendChild(itemCounter)
-                divCountCont.appendChild(countUpButton)
-                liItem.appendChild(divCountCont)
-                liItem.id = `${id}`
-                document.querySelector('#basket').appendChild(liItem)
-                basketData[id] = title
-
-                countUpButton.addEventListener('click',function(e){
-                    let counterNow = +document.getElementById(`${idItem}`).querySelector('div > p.basket__counter').textContent
-                    if( counterNow < counterMax){
-                        +document.getElementById(`${idItem}`).querySelector('div > p.basket__counter').textContent++
-                    }
-                })
-                countDownButton.addEventListener('click',function(e){
-                    let counterNow = +document.getElementById(`${idItem}`).querySelector('div > p.basket__counter').textContent
-                    if( counterNow > 1){
-                        +document.getElementById(`${idItem}`).querySelector('div > p.basket__counter').textContent--
-                    }
-                })
-            }
-        })
-        ul.appendChild(liItem)
-    });
+function cloneBasketItem(id, title, price, amount){
+    const liOrig =  template.querySelector('.basket__list-item')
+    const liClone = liOrig.cloneNode(true)
+    liClone.querySelector('.basket__list-item-title').textContent = title
+    liClone.querySelector('.basket__list-item-amount').textContent = `На складе:${amount}`
+    liClone.querySelector('.basket__list-item-count').textContent = 1
+    liClone.id = id
+    liClone.querySelector('.basket__list-item-up').addEventListener('click', (e) => {
+        let currentCount = document.getElementById(id).querySelector('.basket__list-item-count').textContent
+        if(currentCount < amount){
+            +document.getElementById(id).querySelector('.basket__list-item-count').textContent++
+        }
+    })
+    liClone.querySelector('.basket__list-item-down').addEventListener('click', (e) => {
+        let currentCount = +document.getElementById(id).querySelector('.basket__list-item-count').textContent
+        if(currentCount <= 1){
+            document.getElementById(`${id}`).remove()
+            basket.delete(id)
+        }else{
+            +document.getElementById(id).querySelector('.basket__list-item-count').textContent--
+        }
+    })
+        
+    basketElement.appendChild(liClone)
 }
 
-for(const item of ['food','drinks']) getProducts(`${item}`, document.querySelector(`#${item} ul`))
+function cloneShowcaseItem(parent, id, title, price, amount){
+    const liOrig =  template.querySelector('.showcase__list-item')
+    const liClone = liOrig.cloneNode(true)
+    liClone.querySelector('.showcase___list-item-title').textContent =`${title}, ${price} руб.`    
+    liClone.querySelector('.showcase___list-item-add').addEventListener('click', (e) => {
+        if(!basket.has(id)){
+            cloneBasketItem(id, title, price, amount)
+            basket.set(id,{title, price, amount})
+        }
+    })
+    parent.appendChild(liClone)
+}
 
+async function getShowcase(){
+   await loadData()
+   food.forEach(({id, title, price, amount}) => {
+        cloneShowcaseItem(showcaseFood, id, title, price, amount)
+   });
+   drinks.forEach(({id, title, price, amount}) => {
+    cloneShowcaseItem(showcaseDrinks, id, title, price, amount)
+});
+}
 
+document.addEventListener('DOMContentLoaded',getShowcase())
 
-
+//TODO: Функцию cloneShowcaseItem добработать все параметры и из JSON

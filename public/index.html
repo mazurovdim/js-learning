@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="data.js" defer></script>
     <script src="index.js" defer></script>
-
     <link rel="stylesheet" href="index.css">
     <title>Гамбургер</title>
 </head>
@@ -27,10 +27,24 @@
             <hr class="basket__line">
             <h2 class="basket__text">Корзина:</h2>
             <ul id="basket" class="basket__list">
-            
+
             </ul>
-        </div>   
+        </div>  
     </section>
-    
+    <section id="templates">
+        <li class="basket__list-item">
+            <span class="basket__list-item-title"></span>
+            <span class="basket__list-item-count-holder">
+                <span class="basket__list-item-amount"></span>
+                <button class="basket__list-item-down">-</button>
+                <span class="basket__list-item-count">1</span>
+                <button class="basket__list-item-up">+</button>
+            </span>
+        </li>
+        <li class="showcase__list-item">
+            <span class="showcase___list-item-title"></span>
+            <button class="showcase___list-item-add">Добавить</button>
+        </li>
+    </section>
 </body>
 </html>

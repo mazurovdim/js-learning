@@ -14,36 +14,12 @@ ul, li, p{
 .app{
     width: 70%;
 }
-
-section ul li {
-    border: 1px black solid;
+.showcase__list-item{
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 10px;
-    padding: 10px;
+    border-bottom: 1px black dotted;
 }
-
-.basket__list li{
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px black dotted
-}
-
-.basket__list div{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.basket__list button{
-    margin: 0;
-    padding: 0;
-    height: 15px;
-}
-
 .basket__down-button,
 .basket__up-button{
     width: 30px;
@@ -51,3 +27,9 @@ section ul li {
     align-items: center;
     justify-content: center;
 }
+
+#templates{
+    display: none
+}
+
+basket__list-item
